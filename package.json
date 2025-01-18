@@ -6,8 +6,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node backend/app.js",
-    "dev":"NODE_ENV=DEVELOPMENT nodemon backend/app.js",
-    "prod":"NODE_ENV=PRODUCTION nodemon backend/app.js"
+    "dev": "NODE_ENV=DEVELOPMENT nodemon backend/app.js",
+    "prod": "NODE_ENV=PRODUCTION nodemon backend/app.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,8 @@
   "homepage": "https://github.com/aman-maurya108/ShopIT#readme",
   "dependencies": {
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
     "nodemon": "^3.1.9"
   }
 }
