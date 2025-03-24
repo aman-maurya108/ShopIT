@@ -9,7 +9,7 @@ export const connectDatabase = () => {
 
 
     mongoose.connect(DB_URI).then((con) =>{
-        console.log(`MangoDB connected with HOST: ${con?.connection?.host}`);
+        console.log(`MongoDB connected with HOST: ${con?.connection?.host}`);
     });
 
 };
