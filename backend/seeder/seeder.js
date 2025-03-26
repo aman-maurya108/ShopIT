@@ -2,22 +2,23 @@ import mongoose from "mongoose";
 import products from "./data.js";
 import Product from "../models/product.js";
 
-const seedProducts = async() => {
+
+const seedProducts = async()=>{
     try{
-        await mongoose.connect("mongodb://localhost:27017/ShopIT");
+    
+  await mongoose.connect("mongodb://localhost:27017/shopit");
 
-        await Product.deleteMany();
-        console.log('Products are deleted');
+  await Product.deleteMany();
+  console.log("Products are deleted");
 
-        await Product.insertMany(products);
-        console.log('Products are seeded');
+  await Product.insertMany(products);
+  console.log("Products are inserted");
 
-        process.exit();
+  process.exit();
 
-    } catch(error){
+    }catch(error){
         console.log(error.message);
         process.exit();
     }
-}
-
+};
 seedProducts();

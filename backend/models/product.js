@@ -1,92 +1,92 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: [true, "Please enter product name"],
-      maxlength: [200, "Product name cannot exceed 200 characters"],
+const productSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required: [true, "Please enter the required field"],
+        maxLength: [200, "Product name not exceed 200 characters"],
     },
-    price: {
-      type: Number,
-      required: [true, "Pleade enter product price"],
-      maxlength: [5, "Product name cannot exceed 5 digits"],
+    price:{
+        type:Number,
+        required:[true, "Please enter producct price"],
+        maxLength: [5,"Product price cannot exceed 5 digits"],
     },
-    description: {
-      type: String,
-      required: [true, "Pleade enter product description"],
+      description:{
+        type:String,
+        required: [true, "Please enter the required field"],
+       
     },
-    ratings: {
-      type: Number,
-      default: 0,
+    ratings:{
+        type:Number,
+        default: 0,
     },
-    images: [
-      {
-        public_id: {
-          type: String,
-          required: true,
+    images:[{
+        public_id:{
+            type:String,
+            required:true,
         },
-        url: {
-          type: String,
-          required: true,
+        url:{
+            type:String,
+            required:true,
+        }
+    }],
+    category:{
+        type:String,
+        required: [true,"Please enter product category"],
+        enum:{
+            values: [
+                "Electronics",
+                "Cameras",
+                "Laptops",
+                "Accessories",
+                "Headphones",
+                "Food",
+                "Book",
+                "Sports",
+                "Outdoor",
+                "Home",
+            ],
+            message: "Please select correct category",
         },
-      },
-    ],
-    category: {
-      type: String,
-      required: [true, "Please enter product category"],
-      enum: {
-        values: [
-          "Electronics",
-          "Cameras",
-          "Laptops",
-          "Accessories",
-          "Headphones",
-          "Food",
-          "Books",
-          "Sports",
-          "Outdoor",
-          "Home",
-        ],
-        message: "Please select valid category",
-      },
     },
-    seller: {
-      type: String,
-      required: [true, "Pleade enter product seller"],
+    seller:{
+        type:String,
+        required: [true, "Please enter the product seller"],
+        
     },
-    stock: {
-      type: Number,
-      required: [true, "Please enter product stock"],
+    stock:{
+        type:Number,
+        required:[true,"Please enter product stock"],
     },
-    numberOfReviews: {
-      type: Number,
-      default: 0,
+    numOfReviews:{
+        type:Number,
+        default:0,
+
     },
     reviews: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        rating: {
-          type: Number,
-          required: true,
-        },
-        comment: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: false,
-    },
-  },
-  { timestamps: true }
-);
+        {
+            user:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: true,
 
-export default mongoose.model("Product", productSchema);
+            },
+            rating:{
+                type:Number,
+                required: true,
+            },
+            comment: {
+                type: String,
+                required: true,
+            },
+        },
+    ],
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required: false,
+    },
+    
+},{timestamps:true}
+);
+export default mongoose.model("Product",productSchema);
