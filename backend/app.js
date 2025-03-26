@@ -1,22 +1,37 @@
-import express from "express";
-const app = express();
-import dotenv from "dotenv";
+import express from "express"
+const app =express()
+import dotenv from "dotenv"
 import { connectDatabase } from "./config/dbConnect.js";
+import errorMiddleware from "./middlewares/errors.js";
+//Handle Uncaught Exception
+process.on("uncaughtException",(err)=>{
+    console.log(`ERRROR: ${err}`);
+    console.log("Shutting down due to uncaught Exception");
+    process.exit(1);
+});
 
-dotenv.config({path:"backend/config/config.env"});
 
-
-//connecting to DB
+dotenv.config({path: "backend/config/config.env"});
+//connecting to database
 connectDatabase();
-
 app.use(express.json());
 
-//Import all routes
+//import all routes
 import productRoutes from "./routes/products.js";
 
 app.use("/api/v1",productRoutes);
 
+app.use(errorMiddleware);
 
-app.listen(process.env.PORT,() => {
-    console.log(`server started on port: ${process.env.PORT} in ${process.env.NODE_ENV} mode`);
+const server = app.listen(process.env.PORT,()=>{
+    console.log(`server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode`);
+});
+
+//handle unhandled promise rejection
+process.on("unhandledRejection",(err)=>{
+    console.log(`ERROR: ${err}`);
+    console.log(`Shuttting down server due to unhandled promise rejection`);
+    server.close(()=>{
+        process.exit(1);
+    })
 });

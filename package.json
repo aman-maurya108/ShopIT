@@ -2,29 +2,21 @@
   "name": "shopit",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "start": "node backend/app.js",
-    "dev": "nodemon backend/app.js",
-    "prod": "nodemon backend/app.js",
-    "seeder":"node backend/seeder/seeder.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aman-maurya108/ShopIT.git"
+    "dev" :"SET NODE_ENV=DEVELOPMENT& nodemon backend/app.js",
+    "prod" :"SET NODE_ENV=PRODUCTION& nodemon backend/app.js",
+    "seeder": "node backend/seeder/seeder.js"
   },
   "keywords": [],
-  "author": "aman",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aman-maurya108/ShopIT/issues"
-  },
-  "homepage": "https://github.com/aman-maurya108/ShopIT#readme",
+  "description": "",
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.9.5",
+    "mongoose": "^8.12.2",
     "nodemon": "^3.1.9"
   }
 }
