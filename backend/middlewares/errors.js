@@ -1,4 +1,4 @@
-import ErrrorHandler from "../utils/errorHandler.js";
+import ErrorHandler from "../utils/errorHandler.js";
 
 export default (err, req, res, next)=>{
     let error ={
@@ -8,30 +8,30 @@ export default (err, req, res, next)=>{
     //handle invalid mongoose id error
     if(err.name=== "CastError"){
         const message = `Resource not found. Invalid: ${err?.path}`
-        error =new ErrrorHandler(message,400);
+        error =new ErrorHandler(message,400);
     }
     //handle validation error
     if(err.name=== "ValidationError"){
         const message = Object.values(err.errors).map((value)=>value.message);
-        error =new ErrrorHandler(message,404);
+        error =new ErrorHandler(message,404);
     }
 
      //handle  mongoose Duplicate key error
      if(err.name=== 1100){
         const message = `Duplicate ${Object.keys(err.keyValue)}entered`;
-        error =new ErrrorHandler(message,404);
+        error =new ErrorHandler(message,404);
     }
 
      //handle  wrong JWT error
      if(err.name=== "jsonWebTokenError"){
         const message = `JSON Web Token is invalid.Try Again!!!`;
-        error =new ErrrorHandler(message,400);
+        error =new ErrorHandler(message,400);
     }
 
      //handle expired JWT error
      if(err.name=== "TokenExpiredError"){
         const message = `JSON Web Token is expired.Try Again!!!`;
-        error =new ErrrorHandler(message,404);
+        error =new ErrorHandler(message,404);
     }
 
     if(process.env.NODE_ENV === "DEVELOPMENT"){

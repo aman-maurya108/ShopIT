@@ -1,4 +1,4 @@
-import ErrrorHandler from "../utils/errorHandler.js";
+import ErrorHandler from "../utils/errorHandler.js";
 import catchAsyncErrors from "./catchAsyncErrors.js";
 import user  from "../models/user.js";
 import jwt from "jsonwebtoken";
@@ -9,7 +9,7 @@ export const isAuthenticatedUser = catchAsyncErrors(async (req,res,next) =>{
     const {token} = req.cookies;
 
     if(!token){
-        return next(new ErrrorHandler("Login first to access this resource",401));
+        return next(new ErrorHandler("Login first to access this resource",401));
     }
 
     const decoded = jwt.verify(token,process.env.JWT_SECRET);
@@ -22,7 +22,7 @@ export const isAuthenticatedUser = catchAsyncErrors(async (req,res,next) =>{
 export const authorizeRoles = (...roles) =>{
     return (req,res,next)=>{
         if(!roles.includes(req.user.role)){
-            return next(new ErrrorHandler(`Role (${req.user.role}) is not allowed to access this resource`,403));
+            return next(new ErrorHandler(`Role (${req.user.role}) is not allowed to access this resource`,403));
         }
 
         next();
