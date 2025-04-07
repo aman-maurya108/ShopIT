@@ -1,12 +1,13 @@
-export const PRODUCT_CATEGORIES=[
+export const PRODUCT_CATEGORIES = [
     "Electronics",
     "Cameras",
     "Laptops",
     "Accessories",
     "Headphones",
     "Food",
-    "Book",
+    "Books",
     "Sports",
     "Outdoor",
     "Home",
-]
+  ];
+  

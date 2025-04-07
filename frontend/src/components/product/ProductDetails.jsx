@@ -1,26 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { useGetProductDetailsQuery } from '../../redux/api/productsApi';
-import toast from 'react-hot-toast';
-import Loader from '../layout/Loader';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useGetProductDetailsQuery } from "../../redux/api/productsApi";
+import { toast } from "react-hot-toast";
+import Loader from "../layout/Loader";
+import StarRatings from "react-star-ratings";
 
 const ProductDetails = () => {
-    const params =useParams()
-    const {data,isLoading, error,isError}=useGetProductDetailsQuery(params?.id);
+  const params = useParams();
 
-    const product= data?.product;
+  const { data, isLoading, error, isError } = useGetProductDetailsQuery(
+    params?.id
+  );
+  const product = data?.product;
 
-    const [activeImg, setActiveImg] = useState("")
-    useEffect(()=>{
-     setActiveImg(product?.images[0] ? product?.images[0]?.url : '/images/defualt_product.png')
-    },[product])
+  const [activeImg, setActiveImg] = useState("");
 
-    useEffect(()=>{
-    if(isError){
-    toast.error(error?.data?.message)
+  useEffect(() => {
+    setActiveImg(
+      product?.images[0]
+        ? product?.images[0]?.url
+        : "/images/default_product.png"
+    );
+  }, [product]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
     }
-    },[isError])
-    if(isLoading) return <Loader/>
+  }, [isError]);
+
+  if (isLoading) return <Loader />;
+
   return (
     <div className="row d-flex justify-content-around">
       <div className="col-12 col-lg-5 img-fluid" id="product_image">
@@ -34,22 +44,22 @@ const ProductDetails = () => {
           />
         </div>
         <div className="row justify-content-start mt-5">
-            {product?.images?.map((img)=>(
-
-           
-          <div className="col-2 ms-4 mt-2">
-            <a role="button">
-              <img
-                className={`d-block border rounded p-3 cursor-pointer ${img.url===activeImg ? "border-warning": ""} `}
-                height="100"
-                width="100"
-                src={img?.url}
-                alt={img?.url}
-                onClick={(e)=>setActiveImg(img.url)}
-              />
-            </a>
-          </div>
-           ))}
+          {product?.images?.map((img) => (
+            <div className="col-2 ms-4 mt-2">
+              <a role="button">
+                <img
+                  className={`d-block border rounded p-3 cursor-pointer ${
+                    img.url === activeImg ? "border-warning" : ""
+                  } `}
+                  height="100"
+                  width="100"
+                  src={img?.url}
+                  alt={img?.url}
+                  onClick={(e) => setActiveImg(img.url)}
+                />
+              </a>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -60,17 +70,18 @@ const ProductDetails = () => {
         <hr />
 
         <div className="d-flex">
-          <div className="star-ratings">
-            <i className="fa fa-star star-active"></i>
-            <i className="fa fa-star star-active"></i>
-            <i className="fa fa-star star-active"></i>
-            <i className="fa fa-star star-active"></i>
-            <i className="fa fa-star star-active"></i>
-          </div>
+          <StarRatings
+            rating={product?.ratings}
+            starRatedColor="#ffb829"
+            numberOfStars={5}
+            name="rating"
+            starDimension="24px"
+            starSpacing="1px"
+          />
           <span id="no-of-reviews" className="pt-1 ps-2">
             {" "}
-             ({product?.numOfReviews} Reviews) {" "}
-             </span>
+            ({product?.numOfReviews} Reviews){" "}
+          </span>
         </div>
         <hr />
 
@@ -97,26 +108,30 @@ const ProductDetails = () => {
         <hr />
 
         <p>
-          Status: <span id="stock_status" className= {product?.stock>0 ? 'greenColor' : "redColor"}>
-            {product?.stock>0 ? 'In Stock' : " Out of Stock"}
-            </span>
+          Status:{" "}
+          <span
+            id="stock_status"
+            className={product?.stock > 0 ? "greenColor" : "redColor"}
+          >
+            {product?.stock > 0 ? "In Stock" : "Out of Stock"}
+          </span>
         </p>
 
         <hr />
 
         <h4 className="mt-2">Description:</h4>
-        <p>
-          {product?.description}
-        </p>
+        <p>{product?.description}</p>
         <hr />
-        <p id="product_seller mb-3">Sold by: <strong>{product?.seller}</strong></p>
+        <p id="product_seller mb-3">
+          Sold by: <strong>{product?.seller}</strong>
+        </p>
 
         <div className="alert alert-danger my-5" type="alert">
           Login to post your review.
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetails
+export default ProductDetails;
