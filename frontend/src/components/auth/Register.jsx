@@ -4,54 +4,55 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Register = () =>{
-    const [user, setUser] =useState({
-            name:"",
-            email: "",
-            password: "",
-        });
+const Register = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-        const {name,email,password} =user;
-        const navigate=useNavigate();
-        const [register, { isLoading , error, data}] = useRegisterMutation();
+  const { name, email, password } = user;
 
+  const navigate = useNavigate();
 
-        const {isAuthenticated} =useSelector((state)=> state.auth)
+  const [register, { isLoading, error, data }] = useRegisterMutation();
 
-        useEffect(()=> {
-            if(isAuthenticated){
-                navigate("/");
-            }
-            if(error){
-                toast.error(error?.data?.message);
-            }
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
-        }, [error, isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+    if (error) {
+      toast.error(error?.data?.message);
+    }
+  }, [error, isAuthenticated]);
 
-        const submitHandler = (e) => {
-            e.preventDefault();
+  const submitHandler = (e) => {
+    e.preventDefault();
 
-            const signUpData ={
-                name,
-                email,
-                password,
-            };
-            register(signUpData);
+    const signUpData = {
+      name,
+      email,
+      password,
+    };
 
-        };
-        const onChange =(e) => {
-            setUser({ ...user, [e.target.name]: e.target.value })
-        }
+    register(signUpData);
+  };
 
-    return(
-        <div className="row wrapper">
+  const onChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  return (
+    <div className="row wrapper">
       <div className="col-10 col-lg-5">
-        <form
-          className="shadow rounded bg-body" onSubmit={submitHandler} >
+        <form className="shadow rounded bg-body" onSubmit={submitHandler}>
           <h2 className="mb-4">Register</h2>
 
           <div className="mb-3">
-            <label for="name_field" className="form-label">Name</label>
+            <label htmlFor="name_field" className="form-label">
+              Name
+            </label>
             <input
               type="text"
               id="name_field"
@@ -63,7 +64,9 @@ const Register = () =>{
           </div>
 
           <div className="mb-3">
-            <label for="email_field" className="form-label">Email</label>
+            <label htmlFor="email_field" className="form-label">
+              Email
+            </label>
             <input
               type="email"
               id="email_field"
@@ -75,7 +78,9 @@ const Register = () =>{
           </div>
 
           <div className="mb-3">
-            <label for="password_field" className="form-label">Password</label>
+            <label htmlFor="password_field" className="form-label">
+              Password
+            </label>
             <input
               type="password"
               id="password_field"
@@ -86,15 +91,18 @@ const Register = () =>{
             />
           </div>
 
-          <button id="register_button" type="submit" className="btn w-100 py-2" 
-          disabled={isLoading}
+          <button
+            id="register_button"
+            type="submit"
+            className="btn w-100 py-2"
+            disabled={isLoading}
           >
-           {isLoading? "creating..." : "REGISTER"}
+            {isLoading ? "Creating..." : "REGISTER"}
           </button>
         </form>
       </div>
     </div>
-    )
-}
+  );
+};
 
-export default Register
+export default Register;
