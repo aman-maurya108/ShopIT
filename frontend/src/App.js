@@ -17,8 +17,8 @@ import UploadAvatar from "./components/user/UploadAvatar";
 import UpdatePassword from "./components/user/UpdatePassword";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
-import { Cart } from "./components/cart/Cart";
-import Shiping from "./components/cart/Shiping";
+import Cart from './components/cart/Cart';
+import Shipping from "./components/cart/Shipping";
 import ConfirmOrder from "./components/cart/ConfirmOrder";
 import PaymentMethod from "./components/cart/PaymentMethod";
 
@@ -76,9 +76,30 @@ function App() {
             />
 
             <Route path="/cart" element={<Cart />} />
-            <Route path="/shipping" element={<ProtectedRoute><Shiping /></ProtectedRoute>} />
-            <Route path="/confirm_Order" element={<ProtectedRoute><ConfirmOrder /></ProtectedRoute>} />
-            <Route path="/payment_method" element={<ProtectedRoute><PaymentMethod /></ProtectedRoute>} />
+            <Route
+              path="/shipping"
+              element={
+                <ProtectedRoute>
+                  <Shipping />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/confirm_order"
+              element={
+                <ProtectedRoute>
+                  <ConfirmOrder />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payment_method"
+              element={
+                <ProtectedRoute>
+                  <PaymentMethod />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
 

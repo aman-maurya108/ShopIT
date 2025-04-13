@@ -4,20 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setCartItem, removeCartItem } from "../../redux/features/cartSlice";
 
-export const Cart = () => {
+const Cart = () => {
   const dispatch = useDispatch();
-  const navigate= useNavigate();
+  const navigate = useNavigate();
+
   const { cartItems } = useSelector((state) => state.cart);
 
-  const increaseQty = (item, quantity) => {
+  const increseQty = (item, quantity) => {
     const newQty = quantity + 1;
-    if (newQty > item.stock) return;
+
+    if (newQty > item?.stock) return;
 
     setItemToCart(item, newQty);
   };
 
-  const decreaseQty = (item, quantity) => {
+  const decreseQty = (item, quantity) => {
     const newQty = quantity - 1;
+
     if (newQty <= 0) return;
 
     setItemToCart(item, newQty);
@@ -33,16 +36,16 @@ export const Cart = () => {
       quantity: newQty,
     };
 
-    dispatch(setCartItem(cartItem)); //?
+    dispatch(setCartItem(cartItem));
   };
 
   const removeCartItemHandler = (id) => {
     dispatch(removeCartItem(id));
   };
 
-  const checkoutHandler = ()=>{
+  const checkoutHandler = () => {
     navigate("/shipping");
-  }
+  };
 
   return (
     <>
@@ -77,13 +80,13 @@ export const Cart = () => {
                         </Link>
                       </div>
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                        <p id="card_item_price">{item?.price}</p>
+                        <p id="card_item_price">${item?.price}</p>
                       </div>
                       <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                         <div className="stockCounter d-inline">
                           <span
                             className="btn btn-danger minus"
-                            onClick={() => decreaseQty(item, item?.quantity)}
+                            onClick={() => decreseQty(item, item.quantity)}
                           >
                             {" "}
                             -{" "}
@@ -96,7 +99,7 @@ export const Cart = () => {
                           />
                           <span
                             className="btn btn-primary plus"
-                            onClick={() => increaseQty(item, item?.quantity)}
+                            onClick={() => increseQty(item, item.quantity)}
                           >
                             {" "}
                             +{" "}
@@ -116,6 +119,7 @@ export const Cart = () => {
                 </>
               ))}
             </div>
+
             <div className="col-12 col-lg-3 my-4">
               <div id="order_summary">
                 <h4>Order Summary</h4>
@@ -123,17 +127,28 @@ export const Cart = () => {
                 <p>
                   Units:{" "}
                   <span className="order-summary-values">
-                    {cartItems?.reduce((acc,item) => acc+item?.quantity,0)}{" "}
-                     (Units)</span>
+                    {cartItems?.reduce((acc, item) => acc + item?.quantity, 0)}{" "}
+                    (Units)
+                  </span>
                 </p>
                 <p>
                   Est. total:{" "}
                   <span className="order-summary-values">
-                  {"$"}{cartItems?.reduce((acc,item) => acc+item?.quantity*item.price,0).toFixed(2)}
+                    $
+                    {cartItems
+                      ?.reduce(
+                        (acc, item) => acc + item?.quantity * item.price,
+                        0
+                      )
+                      .toFixed(2)}
                   </span>
                 </p>
                 <hr />
-                <button id="checkout_btn" className="btn btn-primary w-100" onClick={checkoutHandler}>
+                <button
+                  id="checkout_btn"
+                  className="btn btn-primary w-100"
+                  onClick={checkoutHandler}
+                >
                   Check out
                 </button>
               </div>
@@ -144,3 +159,5 @@ export const Cart = () => {
     </>
   );
 };
+
+export default Cart;
