@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MetaData from "../layout/MetaData";
 import { useSelector } from "react-redux";
 import CheckoutSteps from "./CheckoutSteps";
-import { calculateOrderCost } from "../../helpers/helpers";
+import { caluclateOrderCost } from "../../helpers/helpers";
 import {
   useCreateNewOrderMutation,
   useStripeCheckoutSessionMutation,
@@ -40,7 +40,7 @@ const PaymentMethod = () => {
     }
 
     if (isSuccess) {
-      navigate("/");
+      navigate("/me/orders?order_success=true");
     }
   }, [error, isSuccess]);
 
@@ -48,7 +48,7 @@ const PaymentMethod = () => {
     e.preventDefault();
 
     const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
-      calculateOrderCost(cartItems);
+      caluclateOrderCost(cartItems);
 
     if (method === "COD") {
       // Create COD Order

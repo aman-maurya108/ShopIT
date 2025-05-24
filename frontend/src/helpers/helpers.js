@@ -12,7 +12,7 @@ export const getPriceQueryParams = (searchParams, key, value) => {
   return searchParams;
 };
 
-export const calculateOrderCost = (cartItems) => {
+export const caluclateOrderCost = (cartItems) => {
   const itemsPrice = cartItems?.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
